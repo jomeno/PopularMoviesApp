@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter movieAdapter;
-    String sortBy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // set sorting order from preference
-        sortBy = "popularity.desc";
-
         updateMovieList();
     }
 
@@ -64,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void update(ArrayList<Movie> result) {
                 //Toast.makeText(getApplicationContext(), "Loading... Please wait", Toast.LENGTH_SHORT).show();
-
                 movieAdapter.notifyDataSetChanged();
                 if (result != null) {
                     movieAdapter.clear();
@@ -74,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public Context getContext() {
-                return getContext();
+            public Context getListenerContext() {
+                return MainActivity.this;
             }
         }).execute(sortBy);
     }

@@ -11,5 +11,5 @@ import java.util.ArrayList;
  */
 public interface MoviesInterface {
     void update(ArrayList<Movie> result);
-    Context getContext();
+    Context getListenerContext();
 }

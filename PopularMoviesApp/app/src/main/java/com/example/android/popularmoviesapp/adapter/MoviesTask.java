@@ -48,7 +48,7 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(listener.getContext(), "", "Loading... Please wait");
+        progressDialog = ProgressDialog.show(listener.getListenerContext(), "", "Loading... Please wait");
     }
 
     @Override
@@ -120,7 +120,7 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 try {
                     reader.close();
                 } catch (final IOException e) {
-                    Log.e("MoviesAdapter", "Error closing stream", e);
+                    Log.e("MoviesTask", "Error closing stream", e);
                 }
             }
         }
