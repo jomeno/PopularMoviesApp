@@ -5,4 +5,32 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="header">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/header</item>
+        <!--<item name="android:textColor">@color/white</item>-->
+        <!--<item name="android:background">@color/grey_dark</item>-->
+        <item name="android:padding">@dimen/header_padding</item>
+        <item name="android:elevation">@dimen/header_elevation</item>
+    </style>
+
+    <style name="detail_body">
+        <item name="android:paddingLeft">@dimen/body_padding</item>
+        <item name="android:paddingRight">@dimen/body_padding</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="detail_button">
+        <item name="android:paddingLeft">@dimen/button_padding_side</item>
+        <item name="android:paddingRight">@dimen/button_padding_side</item>
+        <item name="android:paddingTop">@dimen/button_padding_top</item>
+        <item name="android:paddingBottom">@dimen/button_padding_top</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/ColorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
 </resources>
