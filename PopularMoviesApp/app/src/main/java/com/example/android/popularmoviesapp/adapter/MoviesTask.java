@@ -48,14 +48,14 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(listener.getListenerContext(), "", "Loading... Please wait");
+        //progressDialog = ProgressDialog.show(listener.getListenerContext(), "", "Loading... Please wait");
     }
 
     @Override
     protected void onPostExecute(ArrayList<Movie> result) {
         listener.update(result);
 
-        if (progressDialog != null) progressDialog.dismiss();
+        //if (progressDialog != null) progressDialog.dismiss();
     }
 
     @Override
