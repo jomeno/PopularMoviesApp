@@ -27,7 +27,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         TextView releaseDateView = (TextView) findViewById(R.id.release_date);
         TextView releaseYearView = (TextView) findViewById(R.id.release_year);
         ImageView thumbnailView = (ImageView) findViewById(R.id.thumbnail);
-        String releaseYear = movie.releaseDate.substring(0, 4);
+        //String releaseYear = movie.releaseDate.substring(0, 4);
 
         Picasso.with(this)
                 .load(movie.imageUrl)
@@ -40,8 +40,8 @@ public class MovieDetailActivity extends AppCompatActivity {
             titleView.setText(movie.title);
             overviewView.setText(movie.overview);
             releaseDateView.setText(movie.releaseDate);
-            releaseYearView.setText(releaseYear);
-            ratingView.setText("Rating - "+movie.rating);
+            //releaseYearView.setText(releaseYear);
+            ratingView.setText("Rating - "+movie.vote_average);
         }
 
     }
