@@ -1,10 +1,12 @@
 package com.example.android.popularmoviesapp.adapter;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.android.popularmoviesapp.R;
 import com.example.android.popularmoviesapp.listener.MoviesInterface;
 import com.example.android.popularmoviesapp.model.Movie;
 
@@ -27,6 +29,8 @@ import java.util.ArrayList;
  */
 public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
+    Context context;
+
     private static String TMDB_BASE_URL;
     private static String TMDB_SORT_ORDER;
     private static String TMDB_API_KEY;
@@ -36,12 +40,13 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     ProgressDialog progressDialog;
 
 
-    public MoviesTask(MoviesInterface listener) {
+    public MoviesTask(MoviesInterface listener, Context context) {
         TMDB_BASE_URL = "http://api.themoviedb.org/3/discover/movie";
         TMDB_API_KEY = "api_key";
         TMDB_SORT_ORDER = "sort_by";
         movieArrayList = new ArrayList<Movie>();
 
+        this.context = context;
         this.listener = listener;
     }
 
@@ -65,7 +70,7 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         String moviesJsonStr;
         try {
             Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
-                    .appendQueryParameter(TMDB_API_KEY, "996b2793844c7089ed0ee2354d4bba29")
+                    .appendQueryParameter(TMDB_API_KEY, context.getResources().getString(R.string.api_key_value))
                     .appendQueryParameter(TMDB_SORT_ORDER, params[0]).build();
             URL url = new URL(builtUri.toString());
             //"http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=996b2793844c7089ed0ee2354d4bba29";

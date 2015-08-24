@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
             public Context getListenerContext() {
                 return MainActivity.this;
             }
-        }).execute(sortBy);
+        }, this).execute(sortBy);
     }
 
     @Override

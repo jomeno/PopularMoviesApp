@@ -7,6 +7,11 @@
     <string name="movie_title">Movie Title</string>
     <string name="content_authority">com.example.android.popularmoviesapp</string>
 
+
+    <string name="api_key_value"></string>
+
+
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
