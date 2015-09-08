@@ -1,7 +1,5 @@
 package com.example.android.popularmoviesapp.listener;
 
-import android.content.Context;
-
 import com.example.android.popularmoviesapp.model.Movie;
 
 import java.util.ArrayList;
@@ -11,5 +9,5 @@ import java.util.ArrayList;
  */
 public interface MoviesInterface {
     void update(ArrayList<Movie> result);
-    Context getListenerContext();
+    /*Context getListenerContext();*/
 }

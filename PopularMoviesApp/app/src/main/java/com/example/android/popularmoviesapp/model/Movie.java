@@ -4,8 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-import com.example.android.popularmoviesapp.data.contracts.MoviesContract;
+import com.example.android.popularmoviesapp.data.contract.MoviesContract;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,10 +16,11 @@ import org.json.JSONObject;
  */
 public class Movie implements Parcelable {
     public int id;
-    public int movie_id;
+    public long movie_id;
     public String overview;
     public String title;
     public long vote_average;
+    public long popularity;
     public String releaseDate;
     public String imageUrl;
     public int favourite;
@@ -35,10 +37,11 @@ public class Movie implements Parcelable {
 
     public Movie(Cursor c){
         this();
-        movie_id = c.getInt(c.getColumnIndex(MoviesContract.Columns.MOVIE_ID));
+        movie_id = c.getLong(c.getColumnIndex(MoviesContract.Columns.MOVIE_ID));
         title = c.getString(c.getColumnIndex(MoviesContract.Columns.TITLE));
         overview = c.getString(c.getColumnIndex(MoviesContract.Columns.OVERVIEW));
         vote_average = c.getLong(c.getColumnIndex(MoviesContract.Columns.VOTE_AVERAGE));
+        popularity = c.getLong(c.getColumnIndex(MoviesContract.Columns.POPULARITY));
         imageUrl = IMAGE_BASE_URL + IMAGE_SIZE + c.getString(c.getColumnIndex(MoviesContract.Columns.IMAGE_URL));
         releaseDate = c.getString(c.getColumnIndex(MoviesContract.Columns.RELEASE_DATE));
     }
@@ -47,23 +50,26 @@ public class Movie implements Parcelable {
         this();
 
         try {
-            movie_id = jsonMovie.getInt("id");
+            movie_id = jsonMovie.getLong("id");
             title = jsonMovie.getString("title");
             overview = jsonMovie.getString("overview");
             vote_average = jsonMovie.getLong("vote_average");
+            popularity = jsonMovie.getLong("popularity");
             imageUrl = IMAGE_BASE_URL + IMAGE_SIZE + jsonMovie.getString("poster_path");
             releaseDate = jsonMovie.getString("release_date");
         } catch (JSONException e) {
+            Log.d("TEST", "TETS");
             e.printStackTrace();
         }
     }
 
     public Movie(Parcel in) {
         id = in.readInt();
-        movie_id = in.readInt();
+        movie_id = in.readLong();
         overview = in.readString();
         title = in.readString();
         vote_average = in.readLong();
+        popularity = in.readLong();
         releaseDate = in.readString();
         imageUrl = in.readString();
         favourite = in.readInt();
@@ -77,10 +83,11 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeInt(movie_id);
+        dest.writeLong(movie_id);
         dest.writeString(overview);
         dest.writeString(title);
         dest.writeLong(vote_average);
+        dest.writeLong(popularity);
         dest.writeString(releaseDate);
         dest.writeString(imageUrl);
         dest.writeInt(favourite);
@@ -105,6 +112,7 @@ public class Movie implements Parcelable {
         cv.put(MoviesContract.Columns.IMAGE_URL, imageUrl);
         cv.put(MoviesContract.Columns.RELEASE_DATE, releaseDate);
         cv.put(MoviesContract.Columns.VOTE_AVERAGE, vote_average);
+        cv.put(MoviesContract.Columns.POPULARITY, popularity);
         cv.put(MoviesContract.Columns.FAVOURITE, favourite);
         return cv;
     }

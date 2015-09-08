@@ -27,8 +27,13 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <provider
-            android:authorities="@string/content_authority"
-            android:name=".data.MoviesProvider"
+            android:authorities="@string/content_authority_movies"
+            android:name=".data.provider.MoviesProvider"
+            android:exported="false"
+            android:syncable="true" />
+        <provider
+            android:authorities="@string/content_authority_videos"
+            android:name=".data.provider.VideosProvider"
             android:exported="false"
             android:syncable="true" />
     </application>

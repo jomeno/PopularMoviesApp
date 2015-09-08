@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesapp.adapter;
+package com.example.android.popularmoviesapp.sync;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.example.android.popularmoviesapp.data.contracts.MoviesContract;
+import com.example.android.popularmoviesapp.data.contract.MoviesContract;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -22,13 +22,6 @@ public class MovieAdapter extends CursorAdapter {
     /**
      * Cache of the children views for a movie list item.
      */
-    public static class ViewHolder {
-        public final ImageView imageView;
-
-        public ViewHolder(View view) {
-            imageView = (ImageView) view;
-        }
-    }
 
     public MovieAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -57,18 +50,29 @@ public class MovieAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
-        View view = getMovieView(context, cursor);
-        ViewHolder viewHolder = new ViewHolder(view);
-        view.setTag(viewHolder);
-        return view;
+        ImageView imageView = new ImageView(context);
+        //LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+        imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 800));
+        //imageView.setPadding(0,0,0,0);
+
+        return imageView;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        // consider refactoring to the setImageResource here
+        ImageView imageView = (ImageView) view;
 
+        String imageUrl = cursor.getString(cursor.getColumnIndex(MoviesContract.Columns.IMAGE_URL));
+
+        Picasso.with(context)
+                .load(imageUrl)
+                .fit()
+                .centerCrop()
+                        //.placeholder(R.mipmap.image_placeholder)
+                        //.error(R.mipmap.no_image_placeholder)
+                .into(imageView);
     }
 
     @Override

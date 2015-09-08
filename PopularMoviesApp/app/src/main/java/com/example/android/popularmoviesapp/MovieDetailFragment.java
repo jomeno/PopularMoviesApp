@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.popularmoviesapp.model.Movie;
@@ -72,8 +74,15 @@ public class MovieDetailFragment extends Fragment {
             overviewView.setText(movie.overview);
             releaseDateView.setText(movie.releaseDate);
             //releaseYearView.setText(releaseYear);
-            ratingView.setText("Rating - "+movie.vote_average);
+            ratingView.setText("Rating - " + movie.vote_average);
         }
+
+        // trailers
+        ListView trailerList = (ListView) rootView.findViewById(R.id.listView);
+        String[] trailers = new String[]{"Trailer 1", "Trailer 2", "Trailer 3", "Trailer 4"};
+        ArrayAdapter<String> trailerAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item_trailer,
+                R.id.item_trailer_text, trailers);
+        trailerList.setAdapter(trailerAdapter);
 
         return rootView;
     }

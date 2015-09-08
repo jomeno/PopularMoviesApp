@@ -5,13 +5,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="movie_title">Movie Title</string>
-    <string name="content_authority">com.example.android.popularmoviesapp</string>
+    <string name="content_authority_movies">com.example.android.popularmoviesapp.movies</string>
+    <string name="content_authority_videos">com.example.android.popularmoviesapp.videos</string>
 
 
-    <string name="api_key_value"></string>
+    <string name="api_key_value">996b2793844c7089ed0ee2354d4bba29</string>
 
-
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="trailers">Trailers</string>
 </resources>

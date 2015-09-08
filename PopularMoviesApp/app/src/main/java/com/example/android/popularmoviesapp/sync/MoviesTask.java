@@ -1,4 +1,4 @@
-package com.example.android.popularmoviesapp.adapter;
+package com.example.android.popularmoviesapp.sync;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -53,14 +53,11 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //progressDialog = ProgressDialog.show(listener.getListenerContext(), "", "Loading... Please wait");
     }
 
     @Override
     protected void onPostExecute(ArrayList<Movie> result) {
         listener.update(result);
-
-        //if (progressDialog != null) progressDialog.dismiss();
     }
 
     @Override
@@ -71,7 +68,7 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         try {
             Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
                     .appendQueryParameter(TMDB_API_KEY, context.getResources().getString(R.string.api_key_value))
-                    .appendQueryParameter(TMDB_SORT_ORDER, params[0]).build();
+                    .appendQueryParameter(TMDB_SORT_ORDER, params[0] + ".desc").build();
             URL url = new URL(builtUri.toString());
             //"http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=996b2793844c7089ed0ee2354d4bba29";
 

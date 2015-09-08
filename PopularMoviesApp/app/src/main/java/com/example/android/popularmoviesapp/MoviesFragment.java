@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesapp;
 
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +16,14 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
-import com.example.android.popularmoviesapp.adapter.MovieAdapter;
-import com.example.android.popularmoviesapp.data.contracts.MoviesContract;
+import com.example.android.popularmoviesapp.sync.MovieAdapter;
+import com.example.android.popularmoviesapp.sync.MoviesTask;
+import com.example.android.popularmoviesapp.data.contract.MoviesContract;
+import com.example.android.popularmoviesapp.listener.MoviesInterface;
 import com.example.android.popularmoviesapp.model.Movie;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class MoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -42,6 +46,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
             MoviesContract.Columns.IMAGE_URL,
             MoviesContract.Columns.OVERVIEW,
             MoviesContract.Columns.VOTE_AVERAGE,
+            MoviesContract.Columns.POPULARITY,
             MoviesContract.Columns.RELEASE_DATE
     };
 
@@ -57,21 +62,46 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         getLoaderManager().initLoader(MOVIE_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        refreshUI();
+    }
+
+    private void refreshUI() {
+        String sortOrder = Utility.getSortOrder(getActivity()) + " DESC LIMIT 20";
+        Uri moviesUri = MoviesContract.getMoviesUri();
+        Cursor cursor = getActivity().getContentResolver().query(moviesUri, null , null, null, sortOrder);
+        mMovieAdapter.swapCursor(cursor);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        String sortBy = Utility.getSortOrder(getActivity());
+        if(savedInstanceState == null){
+            new MoviesTask(new MoviesInterface() {
+                @Override
+                public void update(ArrayList<Movie> movies) {
+                    // do bulk insert here
+                    Vector<ContentValues> cvVector = new Vector<>();
+                    for (Movie movie : movies) {
+                        cvVector.add(movie.toContentValue());
+                    }
+
+                    ContentValues[] cvArray = new ContentValues[cvVector.size()];
+                    cvVector.toArray(cvArray);
+                    getActivity().getContentResolver().bulkInsert(MoviesContract.getMoviesUri(), cvArray);
+                    refreshUI();
+                }
+            }, getActivity()).execute(sortBy);
+        }
 
         // The MovieAdapter will take data from a source
         // to populate the ListView to which it is attached.
@@ -131,14 +161,14 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        //String sortOrder = Utility.getSortOrder(getActivity());
+        String sortOrder = Utility.getSortOrder(getActivity());
         Uri moviesUri = MoviesContract.getMoviesUri();
         return new CursorLoader(getActivity(),
                 moviesUri,
                 MOVIE_COLUMNS,
                 null,
                 null,
-                MoviesContract.Columns.RELEASE_DATE);
+                sortOrder);
     }
 
     @Override

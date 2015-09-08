@@ -1,7 +1,5 @@
 package com.example.android.popularmoviesapp;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,22 +8,17 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
-import com.example.android.popularmoviesapp.adapter.MoviesTask;
-import com.example.android.popularmoviesapp.data.contracts.MoviesContract;
-import com.example.android.popularmoviesapp.listener.MoviesInterface;
 import com.example.android.popularmoviesapp.model.Movie;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 
 public class MainActivity extends AppCompatActivity implements MoviesFragment.Callback {
 
     private static final String MOVIE_DETAIL_FRAG_TAG = "MOVIE_DETAIL_FRAG";
 
-    ArrayAdapter movieAdapter;
+    //ArrayAdapter movieAdapter;
     ArrayList<Movie> movieArrayList;
     String sortBy;
     Boolean mTwoPane = false;
@@ -37,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
 
         setContentView(R.layout.activity_main);
 
-        if(findViewById(R.id.movie_detail_container) != null){
+        if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
             // (res/layout-sw600dp). If this view is present, then activity is in two-pane mode.
             mTwoPane = true;
@@ -48,34 +41,6 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
                         .commit();
             }
         }
-
-        /*if(savedInstanceState == null){
-            movieArrayList = new ArrayList<Movie>();
-            updateMovieList();
-        }else{
-            movieArrayList = savedInstanceState.getParcelableArrayList("selectedMovie");
-        }
-
-        AdapterView movieList = (AdapterView) findViewById(android.R.id.list);
-        movieAdapter = new MovieAdapter(this, movieArrayList);
-        movieList.setAdapter(movieAdapter);
-
-        movieList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplication(), MovieDetailActivity.class);
-                intent.putExtra("selectedMovie", (Parcelable) movieAdapter.getItem(position));
-                startActivity(intent);
-            }
-        });*/
-
-        /*// load appropriate layout view
-        int orientation = getResources().getConfiguration().orientation;
-        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-            setContentView(R.layout.activity_main_landscape);
-        }else{
-            setContentView(R.layout.activity_main);
-        }*/
 
     }
 
@@ -91,37 +56,18 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
         movieArrayList = savedInstanceState.getParcelableArrayList("selectedMovie");
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //if(sortBy != Utility.getSortOrder(this)){
+    /*private void updateUI(){
+        boolean fetch;
+
+        if (sortBy != Utility.getSortOrder(this) && sortBy != "favourite") {
             updateMovieList();
-        //}
-    }
+            sortBy = Utility.getSortOrder(this);
+        } else {
+            // query local db
 
-    private void updateMovieList() {
-        new MoviesTask(new MoviesInterface() {
-            @Override
-            public void update(ArrayList<Movie> movies) {
-
-                // do bulk insert here
-                Vector<ContentValues> cvVector = new Vector<>();
-                for (Movie movie : movies) {
-                    cvVector.add(movie.toContentValue());
-                }
-
-                ContentValues[] cvArray = new ContentValues[cvVector.size()];
-                cvVector.toArray(cvArray);
-                getContentResolver().bulkInsert(MoviesContract.getMoviesUri(), cvArray);
-
-            }
-
-            @Override
-            public Context getListenerContext() {
-                return MainActivity.this;
-            }
-        }, this).execute(sortBy);
-    }
+            updateMovieList();
+        }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,15 +93,15 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
     @Override
     public void onItemSelected(Uri contentUri, Cursor cursor, int position) {
 
-        // map cursor to movie object
+        // make movie from cursor
         Movie movie = new Movie(cursor);
 
         if (mTwoPane) {
-            // In two-pane mode, show the detail view by adding or replacing
+            // In two-pane mode, show detail view by adding or replacing
             // detail fragment using a fragment transaction.
             Bundle args = new Bundle();
             args.putParcelable(MovieDetailFragment.DETAIL_URI, contentUri);
-            args.putParcelable("selectedMovie", (Parcelable)movie);
+            args.putParcelable("selectedMovie", (Parcelable) movie);
 
             MovieDetailFragment fragment = new MovieDetailFragment();
             fragment.setArguments(args);
@@ -166,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
         } else {
             Intent intent = new Intent(this, MovieDetailActivity.class);
             intent.putExtra("selectedMovie", (Parcelable) movie);
-            //.setData(contentUri);
+            //intent.setData(contentUri);
             startActivity(intent);
         }
 

@@ -14,7 +14,8 @@
         <TextView
             android:text="@string/movie_title"
             style="@style/header"
-            android:id="@+id/movie_title" android:textColor="@color/grey_dark" />
+            android:id="@+id/movie_title"
+            android:textColor="@color/grey_dark" />
 
         <LinearLayout
             android:layout_height="wrap_content"
@@ -72,6 +73,19 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/body_padding"
             android:id="@+id/overview" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/body_padding"
+            android:text="@string/trailers"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/listView" />
+
+
     </LinearLayout>
 </ScrollView>
 
