@@ -81,8 +81,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         String sortBy = Utility.getSortOrder(getActivity());
         if(savedInstanceState == null){
@@ -106,7 +105,6 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         // The MovieAdapter will take data from a source
         // to populate the ListView to which it is attached.
         mMovieAdapter = new MovieAdapter(getActivity(), null, 0);
-
         View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
 
         // Get a reference to the ListView, and attach adapter to it.

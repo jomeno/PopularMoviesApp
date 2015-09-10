@@ -24,7 +24,7 @@ public class VideoAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        View view = LayoutInflater.from(context).inflate(R.layout.item_trailer, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_movie_trailer, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);

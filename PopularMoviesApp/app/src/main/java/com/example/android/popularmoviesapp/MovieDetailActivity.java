@@ -1,35 +1,18 @@
 package com.example.android.popularmoviesapp;
 
-import android.app.LoaderManager;
-import android.content.ContentValues;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.android.popularmoviesapp.data.contract.VideosContract;
-import com.example.android.popularmoviesapp.listener.Callbacks;
 import com.example.android.popularmoviesapp.model.Movie;
-import com.example.android.popularmoviesapp.model.Video;
-import com.example.android.popularmoviesapp.sync.VideoAdapter;
-import com.example.android.popularmoviesapp.sync.VideosTask;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.Vector;
 
 
-public class MovieDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MovieDetailActivity extends AppCompatActivity {
 
+    private static final String MOVIE_DETAIL_FRAG_TAG = "MOVIE_DETAIL_FRAG";
     private static final int VIDEO_LOADER = 0;
     private static final String[] VIDEO_COLUMNS = {
             VideosContract.Columns._ID,
@@ -41,8 +24,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             VideosContract.Columns.TYPE
     };
 
-    private VideoAdapter mVideoAdapter;
-    private ListView mListView;
+    //private VideoAdapter mVideoAdapter;
+    //private ListView mListView;
+    //private int mPosition = ListView.INVALID_POSITION;
 
     Movie movie;
 
@@ -52,12 +36,65 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         setContentView(R.layout.activity_movie_detail);
 
         movie = getIntent().getParcelableExtra("selectedMovie");
-        TextView titleView = (TextView) findViewById(R.id.movie_title);
-        TextView overviewView = (TextView) findViewById(R.id.overview);
-        TextView ratingView = (TextView) findViewById(R.id.rating);
-        TextView releaseDateView = (TextView) findViewById(R.id.release_date);
-        TextView releaseYearView = (TextView) findViewById(R.id.release_year);
-        ImageView thumbnailView = (ImageView) findViewById(R.id.thumbnail);
+        Uri contentUri = getIntent().getData();
+        // restore any saved instance states
+        if (savedInstanceState != null && savedInstanceState.containsKey("selectedMovie")) {
+            movie = savedInstanceState.getParcelable("selectedMovie");
+        }
+
+        // Show detail view by adding or replacing detail fragment if movie object is available
+        if (movie != null) {
+            MovieDetailFragment fragment = MovieDetailFragment.newInstance(contentUri, movie);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.movie_detail_container, fragment, MOVIE_DETAIL_FRAG_TAG)
+                    .commit();
+        }
+
+
+        //getLoaderManager().initLoader(VIDEO_LOADER, null, this);
+
+        /*// create adapter and attach to list view
+        mVideoAdapter = new VideoAdapter(this, null, 0);
+        mListView = (ListView) findViewById(R.id.trailer_list);
+
+        // set list view header
+        View header = getLayoutInflater().inflate(R.layout.item_movie_header, mListView, false);
+        setHeaderContent(header, movie);
+        mListView.addHeaderView(header, null, false);
+
+        mListView.setAdapter(mVideoAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // CursorAdapter returns a cursor at the correct position for getItem(), or null
+                // if it cannot seek to that position.
+                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+                if (cursor != null) {
+                    // a working sample video id dXTBbM21plg
+                    String videoId = cursor.getString(cursor.getColumnIndex(Database.Videos.VIDEO_ID));
+                    Intent intent;
+
+                    try {
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoId));
+                        intent.putExtra("VIDEO_ID", videoId);
+                    } catch (ActivityNotFoundException ex) {
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + videoId));
+                    }
+                    startActivity(intent);
+                }
+                mPosition = position;
+            }
+        });*/
+
+    }
+
+    /*private void setHeaderContent(View header, Movie movie) {
+        TextView titleView = (TextView) header.findViewById(R.id.movie_title);
+        TextView overviewView = (TextView) header.findViewById(R.id.overview);
+        TextView ratingView = (TextView) header.findViewById(R.id.rating);
+        TextView releaseDateView = (TextView) header.findViewById(R.id.release_date);
+        TextView releaseYearView = (TextView) header.findViewById(R.id.release_year);
+        ImageView thumbnailView = (ImageView) header.findViewById(R.id.thumbnail);
         String releaseYear = movie.releaseDate.substring(0, 4);
 
         Picasso.with(this)
@@ -65,8 +102,6 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
                 .fit()
                 .centerCrop()
                 .into(thumbnailView);
-
-        getLoaderManager().initLoader(VIDEO_LOADER, null, this);
 
         // set view content
         if (movie != null) {
@@ -76,17 +111,9 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
             releaseYearView.setText(releaseYear);
             ratingView.setText("Rating - " + movie.vote_average);
 
-            // movie trailers
-
+            //movie trailers
             loadMovieTrailers(movie.movie_id);
         }
-
-
-        // create adapter and attach to list view
-        mVideoAdapter = new VideoAdapter(this, null, 0);
-        mListView = (ListView)findViewById(R.id.trailer_list);
-        mListView.setAdapter(mVideoAdapter);
-
 
     }
 
@@ -107,7 +134,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
 
             }
         }, this).execute(String.valueOf(movieId));
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,7 +158,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+/*    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String sortOrder = Utility.getSortOrder(this);
         Uri videoUri = VideosContract.getVideosUri(movie.movie_id);
@@ -156,7 +183,7 @@ public class MovieDetailActivity extends AppCompatActivity implements LoaderMana
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mVideoAdapter.swapCursor(null);
-    }
+    }*/
 
 
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,20 +98,15 @@ public class MainActivity extends AppCompatActivity implements MoviesFragment.Ca
         if (mTwoPane) {
             // In two-pane mode, show detail view by adding or replacing
             // detail fragment using a fragment transaction.
-            Bundle args = new Bundle();
-            args.putParcelable(MovieDetailFragment.DETAIL_URI, contentUri);
-            args.putParcelable("selectedMovie", (Parcelable) movie);
-
-            MovieDetailFragment fragment = new MovieDetailFragment();
-            fragment.setArguments(args);
+            MovieDetailFragment fragment = MovieDetailFragment.newInstance(contentUri, movie);
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.movie_detail_container, fragment, MOVIE_DETAIL_FRAG_TAG)
                     .commit();
         } else {
             Intent intent = new Intent(this, MovieDetailActivity.class);
-            intent.putExtra("selectedMovie", (Parcelable) movie);
-            //intent.setData(contentUri);
+            intent.setData(contentUri);
+            intent.putExtra("selectedMovie", movie);
             startActivity(intent);
         }
 

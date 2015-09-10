@@ -1,88 +1,42 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_movies"
+    android:name="com.example.android.popularmoviesapp.MovieDetailFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.popularmoviesapp.MovieDetailActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    tools:context="com.example.android.popularmoviesapp.MovieDetailFragment"
+    >
 
 
-        <TextView
-            android:text="@string/movie_title"
-            style="@style/header"
-            android:id="@+id/movie_title"
-            android:textColor="@color/grey_dark" />
-
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            style="@style/detail_body">
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:padding="1dp">
-
-                <ImageView
-                    android:id="@+id/thumbnail"
-                    android:layout_width="150dp"
-                    android:layout_height="180dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/body_padding"
-                android:paddingTop="@dimen/body_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:id="@+id/release_year" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="italic"
-                    android:id="@+id/rating" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/release_date" />
-
-                <Button
-                    style="@style/detail_button"
-                    android:text="MARK AS\nFAVOURITE"
-                    android:layout_marginTop="10dp" />
-
-            </LinearLayout>
+</fragment>-->
 
 
-        </LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/movie_detail_container"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_weight="7" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/body_padding"
-            android:id="@+id/overview" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/trailer_list">
 
-        </ListView>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context="com.example.android.popularmoviesapp.MovieDetailActivity">-->
 
-    </LinearLayout>
-</ScrollView>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+
+
+
+        <!--<ListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/trailer_list"></ListView>-->
+
+    <!--</LinearLayout>-->
+<!--</LinearLayout>-->

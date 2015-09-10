@@ -1,6 +1,5 @@
 package com.example.android.popularmoviesapp.sync;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -37,7 +36,6 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
     ArrayList<Movie> movieArrayList;
     MoviesInterface listener;
-    ProgressDialog progressDialog;
 
 
     public MoviesTask(MoviesInterface listener, Context context) {
@@ -57,7 +55,7 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
     @Override
     protected void onPostExecute(ArrayList<Movie> result) {
-        listener.update(result);
+        if(result != null) listener.update(result);
     }
 
     @Override
