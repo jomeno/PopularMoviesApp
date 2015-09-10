@@ -60,7 +60,7 @@
             <Button
                 style="@style/detail_button"
                 android:text="MARK AS\nFAVOURITE"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp" android:id="@+id/button_favourite" />
 
         </LinearLayout>
 

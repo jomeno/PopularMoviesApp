@@ -64,6 +64,12 @@ public class MoviesTask extends AsyncTask<String, Void, ArrayList<Movie>> {
         BufferedReader reader = null;
         String moviesJsonStr;
         try {
+
+            // changes user's sort preference (if favourite) to popular
+            // because sorting by 'favourite' only applies to user's local db
+            //if(params[0] == Utility.favouriteSortOrder(context))
+                //params[0] = Utility.popularSortOrder(context);
+
             Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
                     .appendQueryParameter(TMDB_API_KEY, context.getResources().getString(R.string.api_key_value))
                     .appendQueryParameter(TMDB_SORT_ORDER, params[0] + ".desc").build();

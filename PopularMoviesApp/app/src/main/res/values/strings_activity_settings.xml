@@ -27,6 +27,7 @@
         <item>favourite</item>
     </string-array>
     <string name="pref_sort_default" translatable="false">popularity</string>
+    <string name="pref_sort_favourite" translatable="false">favourite</string>
 
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>

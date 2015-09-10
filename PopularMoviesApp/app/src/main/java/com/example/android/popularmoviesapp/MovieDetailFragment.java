@@ -15,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.popularmoviesapp.data.Database;
+import com.example.android.popularmoviesapp.data.contract.MoviesContract;
 import com.example.android.popularmoviesapp.data.contract.VideosContract;
 import com.example.android.popularmoviesapp.listener.Callbacks;
 import com.example.android.popularmoviesapp.model.Movie;
@@ -128,6 +130,21 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
                 }
             });
 
+            // set click listeners
+            Button buttonFavourite = (Button) rootView.findViewById(R.id.button_favourite);
+            buttonFavourite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ContentValues values = new ContentValues();
+                    values.put(MoviesContract.Columns.FAVOURITE, 1);
+
+                    String[] selectionArgs = new String[]{String.valueOf(movie.movie_id)};
+                    String selection = MoviesContract.Columns.MOVIE_ID + " = ?";
+                    int _id = getActivity().getContentResolver()
+                            .update(MoviesContract.getMovieUri(movie.movie_id), values, selection, selectionArgs);
+                }
+            });
+
         }
 
         return rootView;
@@ -178,7 +195,7 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
                 getActivity().getContentResolver().bulkInsert(VideosContract.getVideosUri(movieId), cvArray);
 
                 // query locally saved data and swap adapter cursor to update list
-                Cursor cursor = getActivity().getContentResolver().query(VideosContract.getVideosUri(movieId), VIDEO_COLUMNS, null, null,null);
+                Cursor cursor = getActivity().getContentResolver().query(VideosContract.getVideosUri(movieId), VIDEO_COLUMNS, null, null, null);
                 mVideoAdapter.swapCursor(cursor);
 
             }
@@ -188,7 +205,7 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String sortOrder = Utility.getSortOrder(getActivity());
-        Uri videoUri = VideosContract.getVideosUri((long)0);
+        Uri videoUri = VideosContract.getVideosUri((long) 0);
         if (movie != null)
             videoUri = VideosContract.getVideosUri(movie.movie_id);
         return new CursorLoader(getActivity(),
@@ -214,4 +231,6 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
     public void onLoaderReset(Loader<Cursor> loader) {
         mVideoAdapter.swapCursor(null);
     }
+
+
 }

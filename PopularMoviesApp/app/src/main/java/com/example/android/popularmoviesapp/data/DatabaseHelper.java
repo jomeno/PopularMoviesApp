@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 // Ensure application has only one movie entry per id per title
                 // create a UNIQUE constraint with REPLACE strategy
                 " UNIQUE (" + Database.Movies.MOVIE_ID + ", " +
-                Database.Movies.TITLE + ") ON CONFLICT REPLACE);";
+                Database.Movies.TITLE + ") ON CONFLICT IGNORE);";
 
         final String SQL_CREATE_VIDEOS_TABLE = "CREATE TABLE " + Database.Videos.TABLE_NAME + " (" +
                 Database.Videos._ID + " INTEGER PRIMARY KEY," +

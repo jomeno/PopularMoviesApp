@@ -16,11 +16,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
-import com.example.android.popularmoviesapp.sync.MovieAdapter;
-import com.example.android.popularmoviesapp.sync.MoviesTask;
 import com.example.android.popularmoviesapp.data.contract.MoviesContract;
 import com.example.android.popularmoviesapp.listener.MoviesInterface;
 import com.example.android.popularmoviesapp.model.Movie;
+import com.example.android.popularmoviesapp.sync.MovieAdapter;
+import com.example.android.popularmoviesapp.sync.MoviesTask;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -75,6 +75,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
     private void refreshUI() {
         String sortOrder = Utility.getSortOrder(getActivity()) + " DESC LIMIT 20";
+
         Uri moviesUri = MoviesContract.getMoviesUri();
         Cursor cursor = getActivity().getContentResolver().query(moviesUri, null , null, null, sortOrder);
         mMovieAdapter.swapCursor(cursor);

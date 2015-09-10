@@ -149,7 +149,7 @@ public class MoviesProvider extends ContentProvider {
 
         switch (match) {
             case MOVIE:
-                selection = Database.Movies._ID + " = ?";
+                selection = Database.Movies.MOVIE_ID + " = ?";
                 rowsUpdated = db.update(Database.Movies.TABLE_NAME, values, selection,
                         selectionArgs);
                 break;

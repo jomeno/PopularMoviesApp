@@ -12,4 +12,13 @@ public class Utility {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_sort_key), context.getString(R.string.pref_sort_default));
     }
+
+    public static String popularSortOrder(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return context.getString(R.string.pref_sort_default);
+    }
+    public static String favouriteSortOrder(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return context.getString(R.string.pref_sort_default);
+    }
 }
