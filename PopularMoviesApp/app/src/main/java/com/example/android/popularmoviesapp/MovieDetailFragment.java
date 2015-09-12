@@ -97,11 +97,6 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
 
         if (getArguments() != null) {
             movie = getArguments().getParcelable("selectedMovie");
-            //rootView.setVisibility(View.VISIBLE);
-
-            /*// create adapter and attach to list view
-            mVideoAdapter = new VideoAdapter(getActivity(), null, 0);
-            mListView = (ListView) rootView.findViewById(R.id.trailer_list);*/
 
             // set list view header
             View header = inflater.inflate(R.layout.item_movie_header, mListView, false);

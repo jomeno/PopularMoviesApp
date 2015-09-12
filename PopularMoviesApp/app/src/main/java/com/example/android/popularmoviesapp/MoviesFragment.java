@@ -77,7 +77,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         String sortOrder = Utility.getSortOrder(getActivity()) + " DESC LIMIT 20";
 
         Uri moviesUri = MoviesContract.getMoviesUri();
-        Cursor cursor = getActivity().getContentResolver().query(moviesUri, null , null, null, sortOrder);
+        Cursor cursor = getActivity().getContentResolver().query(moviesUri, null, null, null, sortOrder);
         mMovieAdapter.swapCursor(cursor);
     }
 
@@ -85,10 +85,11 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         String sortBy = Utility.getSortOrder(getActivity());
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             new MoviesTask(new MoviesInterface() {
                 @Override
                 public void update(ArrayList<Movie> movies) {
+                    if (movies == null) return;
                     // do bulk insert here
                     Vector<ContentValues> cvVector = new Vector<>();
                     for (Movie movie : movies) {
