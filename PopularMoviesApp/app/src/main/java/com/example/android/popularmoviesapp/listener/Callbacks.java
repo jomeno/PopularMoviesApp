@@ -1,6 +1,6 @@
 package com.example.android.popularmoviesapp.listener;
 
-import com.example.android.popularmoviesapp.model.Video;
+import com.example.android.popularmoviesapp.model.MovieAsset;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,6 @@ import java.util.ArrayList;
 public class Callbacks {
 
     public interface VideoCallbacks{
-        public void update(ArrayList<Video> videos);
+        public void update(ArrayList<MovieAsset> videos);
     }
 }

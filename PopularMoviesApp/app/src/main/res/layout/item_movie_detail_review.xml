@@ -3,5 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="30dp"
-    android:id="@+id/item_trailer_text"
-    android:text="Trailer Title" />
+    android:id="@+id/item_section_text"
+    android:text="Review Text" />

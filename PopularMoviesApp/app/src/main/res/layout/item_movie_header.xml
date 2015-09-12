@@ -75,7 +75,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/body_padding" android:text="Trailers" android:textStyle="bold" />
+        android:padding="@dimen/body_padding" android:text="@string/trailers_and_reviews" android:textStyle="bold" />
 
 
 </LinearLayout>

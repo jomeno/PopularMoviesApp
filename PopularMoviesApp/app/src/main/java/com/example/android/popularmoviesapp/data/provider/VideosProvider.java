@@ -96,7 +96,8 @@ public class VideosProvider extends ContentProvider {
         selection = Database.Videos.MOVIE_ID + " = ?";
         String movieId = uri.getPathSegments().get(1);
         selectionArgs = new String[]{movieId};
-        return _db.query(Database.Videos.TABLE_NAME,projection,selection,selectionArgs,null,null,null);
+        sortOrder = "type";
+        return _db.query(Database.Videos.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
         //return sVideoQueryBuilder.query(_db, projection, selection, selectionArgs, null, null, null);
     }
 

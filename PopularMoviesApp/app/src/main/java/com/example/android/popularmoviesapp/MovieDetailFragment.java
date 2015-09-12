@@ -19,12 +19,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.popularmoviesapp.data.Database;
 import com.example.android.popularmoviesapp.data.contract.MoviesContract;
 import com.example.android.popularmoviesapp.data.contract.VideosContract;
 import com.example.android.popularmoviesapp.listener.Callbacks;
 import com.example.android.popularmoviesapp.model.Movie;
+import com.example.android.popularmoviesapp.model.MovieAsset;
 import com.example.android.popularmoviesapp.model.Video;
 import com.example.android.popularmoviesapp.sync.VideoAdapter;
 import com.example.android.popularmoviesapp.sync.VideosTask;
@@ -116,17 +118,21 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
                     if (cursor != null) {
                         // a working sample video id dXTBbM21plg
                         String videoId = cursor.getString(cursor.getColumnIndex(Database.Videos.VIDEO_ID));
+                        String type = cursor.getString(cursor.getColumnIndex(Database.Videos.SITE));
+                        if(type.equals("YouTube") == false) return;
                         Intent intent;
 
                         try {
                             intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoId));
                             intent.putExtra("VIDEO_ID", videoId);
+                            startActivity(intent);
                         } catch (ActivityNotFoundException ex) {
-                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + videoId));
+                            //intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + videoId));
+                            Toast.makeText(getActivity(), "Failed to start trailer", Toast.LENGTH_SHORT).show();
                         }
-                        startActivity(intent);
                     }
                     mPosition = position;
+                    return;
                 }
             });
 
@@ -142,6 +148,8 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
                     String selection = MoviesContract.Columns.MOVIE_ID + " = ?";
                     int _id = getActivity().getContentResolver()
                             .update(MoviesContract.getMovieUri(movie.movie_id), values, selection, selectionArgs);
+                    if(_id != 0) Toast.makeText(getActivity(),
+                            getResources().getString(R.string.favourite_msg), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -183,11 +191,13 @@ public class MovieDetailFragment extends Fragment implements LoaderManager.Loade
 
         new VideosTask(new Callbacks.VideoCallbacks() {
             @Override
-            public void update(ArrayList<Video> videos) {
+            public void update(ArrayList<MovieAsset> videos) {
                 // do bulk insert here
                 Vector<ContentValues> cvVector = new Vector<>();
-                for (Video video : videos) {
-                    cvVector.add(video.toContentValue());
+                for (MovieAsset movieAsset : videos) {
+                    // for now just save trailers and reviews to db as videos
+                    if (movieAsset.VIEW_TYPE == 1)
+                        cvVector.add(((Video) movieAsset).toContentValue());
                 }
 
                 ContentValues[] cvArray = new ContentValues[cvVector.size()];

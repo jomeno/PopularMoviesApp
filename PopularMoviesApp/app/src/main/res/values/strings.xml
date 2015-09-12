@@ -7,9 +7,11 @@
     <string name="movie_title">Movie Title</string>
     <string name="content_authority_movies">com.example.android.popularmoviesapp.movies</string>
     <string name="content_authority_videos">com.example.android.popularmoviesapp.videos</string>
+    <string name="favourite_msg">Movie Favourited</string>
 
 
     <string name="api_key_value">996b2793844c7089ed0ee2354d4bba29</string>
 
-    <string name="trailers">Trailers</string>
+    <string name="trailers_and_reviews">Trailers and Reviews</string>
+
 </resources>

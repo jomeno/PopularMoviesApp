@@ -13,7 +13,7 @@ import org.json.JSONObject;
 /**
  * Created by Jomeno on 7/11/2015.
  */
-public class Video implements Parcelable {
+public class Video extends MovieAsset implements Parcelable {
     public int id;
     public String video_id;
     public Long movie_id;
